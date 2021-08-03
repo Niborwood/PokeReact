@@ -11,9 +11,7 @@ function MenuBase({ selectedMenuBaseItem, selectMenuBase, changeMenuBase }) {
 
     // CHANGE MENU BASE
     const changeMenuBaseEvent = ({ key }) => {
-      if (key === 'Enter') {
-        changeMenuBase(selectedMenuBaseItem);
-      }
+      changeMenuBase(key, selectedMenuBaseItem);
     };
     document.addEventListener('keyup', changeMenuBaseEvent);
 

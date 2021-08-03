@@ -1,6 +1,6 @@
-const confirmHandler = (key, dispatch, callback) => {
+const confirmHandler = (key, dispatch, callback, param) => {
   if (key === 'Enter' || key === 'x' || key === 'l') {
-    dispatch(callback());
+    dispatch(callback(param));
   }
 };
 
