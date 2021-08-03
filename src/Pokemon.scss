@@ -1,0 +1,102 @@
+.pokemon {
+    display: flex;
+    flex-grow: 1;
+    justify-content: space-between;
+
+    &__infos {
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+    }
+
+    &__level {
+        font-size: 0.65rem;
+        display: flex;
+        justify-content: center;
+        font-weight: bold;
+        align-items: center;
+    }
+
+    &__levelNumber {
+        font-size: 1rem;
+    }
+
+    &__name {
+        text-transform: uppercase;
+    }
+
+    &__life {
+        display: flex;
+        align-items: flex-end;
+        margin-top: .25rem;
+        border-left: 3px solid black;
+        border-bottom: 3px solid black;
+        padding-left: .5rem;
+        padding-bottom: .75rem;
+        border-radius: 3px;
+        flex-wrap: wrap;
+    }
+
+    &__lifeText {
+        font-size: .5rem;
+        font-weight: bold;
+        margin-right: .5rem;
+    }
+
+    &__hp {
+        display: none;
+        width: 100%;
+        text-align: right;
+        margin-top: .127rem;
+    }
+
+    &__lifebar {
+        height: 8px;
+        width: 113px;
+        border-radius: 15px;
+        border: 2px solid black;
+    }
+
+    &__lifebar__fill {
+        height: 4px;
+        border-radius: inherit;
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+        background-color: #59AB5A;
+    }
+
+    &__spriteHolder {
+        display: flex;
+        flex-grow: 1;
+        justify-content: center;
+        align-items: flex-end;
+    }
+
+    &__sprite {
+        display: block;
+        width: 70%;
+        position:relative;
+        top:8px;
+    }
+
+    &__player {
+        flex-direction: row-reverse;
+        align-items: flex-end;
+
+        .pokemon__infos {
+            margin-right: 1rem;
+        }
+
+        .pokemon__life {
+            border-left: none;
+            border-right: 3px solid black;
+            padding-right: .5rem;
+            border-bottom-right-radius: 3px;
+            padding-bottom: .5rem;
+        }
+
+        .pokemon__hp {
+            display: block;
+        }
+    }
+}
