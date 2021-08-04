@@ -1,5 +1,5 @@
 // Create a reducer
-import { CHANGE_MENUBASE, SELECT_MENUBASE_ITEM, EXIT_TO_MENUBASE } from '../actions';
+import { CHANGE_MENUCONTENT, SELECT_MENUBASE_ITEM } from '../actions';
 
 // Initial State
 const initialState = {
@@ -17,7 +17,9 @@ const initialState = {
       spd: 120,
       spe: 120,
     },
-    moves: ['REPOS', 'PLAQUAGE', 'BLABLA DODO', 'TONNERRE'],
+    moves: [1, 2, 3, 4],
+    status: null,
+    effect: null,
   },
   playerPkmn: {
     id: 6,
@@ -31,28 +33,23 @@ const initialState = {
       spd: 90,
       spe: 90,
     },
-    moves: ['LANCE-FLAMME', 'VOL', 'DANSE_FLAMME', 'TRANCHE'],
+    moves: [1, 2, 3, 4],
   },
 };
 
 const reducer = (state = initialState, { type, payload }) => {
   switch (type) {
-    case EXIT_TO_MENUBASE:
-      return {
-        ...state,
-        menuContent: 0,
-      };
-
     case SELECT_MENUBASE_ITEM:
       return {
         ...state,
         selectedMenuBaseItem: payload,
       };
 
-    case CHANGE_MENUBASE:
+    case CHANGE_MENUCONTENT:
       return {
         ...state,
-        menuContent: payload,
+        menuContent: payload.menuContent,
+        selectedMenuBaseItem: 1,
       };
 
     default:

@@ -1,13 +1,13 @@
 // Create a Redux container for the Pokemon component.
 import { connect } from 'react-redux';
-import { exitToMenuBase } from '../actions';
+import { changeMenuBase } from '../actions';
 
 import TwoLinesMenu from '../Menus/TwoLinesMenu';
-import confirmHandler from '../selectors/confirmHandler';
+import actionHandler from '../selectors/actionHandler';
 
 const mapDispatchToProps = (dispatch) => ({
-  exitToMenuBase: (key) => {
-    confirmHandler(key, dispatch, exitToMenuBase);
+  changeMenuContent: (key, targetedMenuItem) => {
+    actionHandler('any', key, dispatch, changeMenuBase, { menuContent: targetedMenuItem });
   },
 });
 

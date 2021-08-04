@@ -3,38 +3,37 @@ import PropTypes from 'prop-types';
 
 import NextArrow from './NextArrow';
 
-function TwoLinesMenu({ exitToMenuBase, lineOne, lineTwo }) {
+function TwoLinesMenu({ changeMenuContent, content, previousMenuContent }) {
   useEffect(() => {
-    // EXIT TO MENU BASE
-    const exitToMenuBaseEvent = ({ key }) => {
-      exitToMenuBase(key);
+    // Event listener to go back to previous menu via
+    // menuContent state.
+    const changeMenuContentEvent = ({ key }) => {
+      changeMenuContent(key, previousMenuContent);
     };
-    document.addEventListener('keyup', exitToMenuBaseEvent);
+    document.addEventListener('keyup', changeMenuContentEvent);
 
     // UNMOUNT EVENTS
     return () => {
-      document.removeEventListener('keyup', exitToMenuBaseEvent);
+      document.removeEventListener('keyup', changeMenuContentEvent);
     };
   }, []);
 
   return (
     <div className="menu__twoLinesMenu">
-      {lineOne}
-      <br />
-      {lineTwo}
+      {content}
       <NextArrow />
     </div>
   );
 }
 
 TwoLinesMenu.propTypes = {
-  exitToMenuBase: PropTypes.func.isRequired,
-  lineOne: PropTypes.string.isRequired,
-  lineTwo: PropTypes.string,
+  changeMenuContent: PropTypes.func.isRequired,
+  content: PropTypes.string.isRequired,
+  previousMenuContent: PropTypes.number,
 };
 
 TwoLinesMenu.defaultProps = {
-  lineTwo: '',
+  previousMenuContent: 0,
 };
 
 export default TwoLinesMenu;

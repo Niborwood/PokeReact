@@ -1,4 +1,4 @@
-// handle arrow keys events in a 4 by 4 grid
+// handle arrow keys events in a fixed 4 by 4 grid
 
 // KEYS : 'ArrowUp' = up, 'ArrowDown' = down, 'ArrowLeft' = left, 'ArrowRight' = right
 // KEYS : 'z' = z, 's' = s, 'q' = q, 'd' = d
@@ -60,7 +60,6 @@ const fourMenuKeyHandler = (key, item) => {
     return 4;
   }
 
-  console.log(item);
   return item;
 };
 

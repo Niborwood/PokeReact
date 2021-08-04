@@ -2,17 +2,17 @@
 import { connect } from 'react-redux';
 import fourMenuKeyHandler from '../selectors/fourMenuKeyHandler';
 import { selectMenuBaseItem, changeMenuBase } from '../actions';
-import confirmHandler from '../selectors/confirmHandler';
+import actionHandler from '../selectors/actionHandler';
 
-import MenuBase from '../Menus/MenuBase';
+import FourItemsMenu from '../Menus/FourItemsMenu';
 
 const mapDispatchToProps = (dispatch) => ({
-  selectMenuBase: (key, item) => {
+  selectMenu: (key, item) => {
     dispatch(selectMenuBaseItem(fourMenuKeyHandler(key, item)));
   },
-  changeMenuBase: (key, menuItem) => {
-    confirmHandler(key, dispatch, changeMenuBase, menuItem);
+  changeMenu: (key, targetedMenuContent) => {
+    actionHandler('confirm', key, dispatch, changeMenuBase, { menuContent: targetedMenuContent });
   },
 });
 
-export default connect(null, mapDispatchToProps)(MenuBase);
+export default connect(null, mapDispatchToProps)(FourItemsMenu);
