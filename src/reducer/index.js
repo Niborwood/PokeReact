@@ -1,10 +1,17 @@
 // Create a reducer
 import { CHANGE_MENUCONTENT, SELECT_MENUBASE_ITEM } from '../actions';
+import pokemons from '../data/pokemons';
+import moves from '../data/moves';
 
 // Initial State
 const initialState = {
+  // --- UI
   menuContent: 0, // 0:MENU, 1:FIGHT, 2:ITEMS, 3:PKMN, 4:RUN
   selectedMenuBaseItem: 1, // 1:FIGHT, 2:PKMN, 3:ITEM, 4:RUN
+  // --- DATA
+  pokemons,
+  moves,
+  // --- GAME
   opponentPkmn: {
     id: 28,
     name: 'Sablaireau',
@@ -18,6 +25,7 @@ const initialState = {
       spe: 120,
     },
     moves: [1, 2, 3, 4],
+    currentPPs: [],
     status: null,
     effect: null,
   },
@@ -33,7 +41,10 @@ const initialState = {
       spd: 90,
       spe: 90,
     },
-    moves: [1, 2, 3, 4],
+    moves: [5, 2, 3, 4],
+    currentPPs: [],
+    status: null,
+    effect: null,
   },
 };
 

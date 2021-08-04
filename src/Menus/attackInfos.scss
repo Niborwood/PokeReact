@@ -1,0 +1,21 @@
+.attackInfo {
+    position: absolute;
+    top: -66px;
+    left: -5px;
+    width: 170px;
+    border-radius: 5px;
+    border: 5px double black;
+    line-height: 16px;
+    background: white;
+    padding: .25rem;
+    box-shadow: 2px 0px 0px 2px white;
+
+    &__type {
+        margin-left: 1rem;
+        text-transform: uppercase;
+    }
+
+    &__pp {
+        text-align: right;
+    }
+}

@@ -21,9 +21,8 @@ function Menu({ menuContent, selectedMenuBaseItem, pkmnMoves }) {
       return <TwoLinesMenu content="Impossible de fuir un combat de dresseur !" />;
 
     default: {
-      const items = ['ATTAQ', 'PKMN', 'OBJET', 'FUITE'];
       return (
-        <FourItemsMenu selectedMenuItem={selectedMenuBaseItem} items={items} fullWidth={false} />
+        <FourItemsMenu selectedMenuItem={selectedMenuBaseItem} fullWidth={false} />
       );
     }
   }

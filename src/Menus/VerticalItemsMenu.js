@@ -2,9 +2,14 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import './verticalItems.scss';
+import AttackInfo from './AttackInfo';
 
 function VerticalItemsMenu({
-  items, selectedMenuItem, cancelAction, selectMenuItem,
+  items,
+  moves,
+  selectedMenuItem,
+  cancelAction,
+  selectMenuItem,
 }) {
   // Render everytime selectedMenuitem changes
   useEffect(() => {
@@ -33,22 +38,37 @@ function VerticalItemsMenu({
     };
   }, [selectedMenuItem]);
 
-  const itemsList = items.map((item, index) => (
-    <div key={item} className={`menu__chooseItem ${selectedMenuItem === index + 1 && 'menu__itemSelected'}`}>{item}</div>
-  ));
+  // Everytime a menu item is selected, we're
+  // retrieving static type and maxPP data from moves,
+  // and currentPP data from the pokemon state
+  // Everything is then passed to the AttackInfo component
+  const { type, pp } = moves.find((move) => move.id === items[selectedMenuItem - 1]);
+
+  // Display as many attacks as the pokemon have
+  // with info from the move id with moves.find
+  const itemsList = items.map((item, index) => {
+    const { name: moveName } = moves.find((move) => move.id === item);
+    return (
+      <div key={item} className={`menu__chooseItem ${selectedMenuItem === index + 1 && 'menu__itemSelected'}`}>{ moveName }</div>
+    );
+  });
 
   return (
-    <div className="verticalItems">
-      {itemsList}
-    </div>
+    <>
+      <AttackInfo type={type} maxPP={pp} currentPP={pp} />
+      <div className="verticalItems">
+        {itemsList}
+      </div>
+    </>
   );
 }
 
 VerticalItemsMenu.propTypes = {
   // FROM PROPS
-  items: PropTypes.arrayOf(PropTypes.string).isRequired,
+  items: PropTypes.arrayOf(PropTypes.number).isRequired,
   selectedMenuItem: PropTypes.number.isRequired,
   // FROM CONTAINER
+  moves: PropTypes.arrayOf(PropTypes.object).isRequired,
   cancelAction: PropTypes.func.isRequired,
   selectMenuItem: PropTypes.func.isRequired,
 };

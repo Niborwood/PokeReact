@@ -23,6 +23,7 @@ function FourItemsMenu({
       document.removeEventListener('keyup', changeMenuEvent);
     };
   }, [selectedMenuItem]);
+
   return (
     <div className="menu__chooseAction">
       <div className="menu__groupActions">

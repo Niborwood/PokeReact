@@ -6,6 +6,10 @@ import verticalMenuKeyHandler from '../selectors/verticalMenuKeyHandler';
 
 import VerticalItemsMenu from '../Menus/VerticalItemsMenu';
 
+const mapStateToProps = ({ moves }) => ({
+  moves,
+});
+
 const mapDispatchToProps = (dispatch) => ({
   selectMenuItem: (key, item, nbItems) => {
     dispatch(selectMenuBaseItem(verticalMenuKeyHandler(key, item, nbItems)));
@@ -15,4 +19,4 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-export default connect(null, mapDispatchToProps)(VerticalItemsMenu);
+export default connect(mapStateToProps, mapDispatchToProps)(VerticalItemsMenu);
