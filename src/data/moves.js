@@ -11,7 +11,7 @@ const moves = [
   {
     id: 2,
     name: 'TRANCHE',
-    damage: 20,
+    damage: 70,
     statusChanger: null,
     type: 'normal',
     effect: null,

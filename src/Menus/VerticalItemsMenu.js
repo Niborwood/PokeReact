@@ -10,8 +10,14 @@ function VerticalItemsMenu({
   selectedMenuItem,
   cancelAction,
   selectMenuItem,
-  battleInit,
+  battleMove,
 }) {
+  // Everytime a menu item is selected, we're
+  // retrieving static type and maxPP data from moves,
+  // and currentPP data from the pokemon state
+  // Everything is then passed to the AttackInfo component
+  const selectedMove = moves.find((move) => move.id === items[selectedMenuItem - 1]);
+
   // Render everytime selectedMenuitem changes
   useEffect(() => {
     // Select menu (through a vertical x items menu).
@@ -33,24 +39,18 @@ function VerticalItemsMenu({
     document.addEventListener('keyup', cancelEventHandler);
 
     // Let's battle the opponent pokemon !
-    const battleInitHandler = ({ key }) => {
-      battleInit(key);
+    const battleMoveHandler = ({ key }) => {
+      battleMove(key, selectedMove);
     };
-    document.addEventListener('keyup', battleInitHandler);
+    document.addEventListener('keyup', battleMoveHandler);
 
     // Remove event listeners when component unmounts
     return () => {
       document.removeEventListener('keyup', cancelEventHandler);
       document.removeEventListener('keyup', selectEventHandler);
-      document.removeEventListener('keyup', battleInitHandler);
+      document.removeEventListener('keyup', battleMoveHandler);
     };
   }, [selectedMenuItem]);
-
-  // Everytime a menu item is selected, we're
-  // retrieving static type and maxPP data from moves,
-  // and currentPP data from the pokemon state
-  // Everything is then passed to the AttackInfo component
-  const { type, pp } = moves.find((move) => move.id === items[selectedMenuItem - 1]);
 
   // Display as many attacks as the pokemon have
   // with info from the move id with moves.find
@@ -63,7 +63,7 @@ function VerticalItemsMenu({
 
   return (
     <>
-      <AttackInfo type={type} maxPP={pp} currentPP={pp} />
+      <AttackInfo type={selectedMove.type} maxPP={selectedMove.pp} currentPP={selectedMove.pp} />
       <div className="verticalItems">
         {itemsList}
       </div>
@@ -79,7 +79,7 @@ VerticalItemsMenu.propTypes = {
   moves: PropTypes.arrayOf(PropTypes.object).isRequired,
   cancelAction: PropTypes.func.isRequired,
   selectMenuItem: PropTypes.func.isRequired,
-  battleInit: PropTypes.func.isRequired,
+  battleMove: PropTypes.func.isRequired,
 };
 
 export default VerticalItemsMenu;

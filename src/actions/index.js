@@ -1,6 +1,6 @@
 export const SELECT_MENUBASE_ITEM = 'SELECT_MENUBASE_ITEM';
 export const CHANGE_MENUCONTENT = 'CHANGE_MENUCONTENT';
-export const BATTLE_INIT = 'BATTLE_INIT';
+export const BATTLE_MOVE = 'BATTLE_MOVE';
 export const BATTLE_START = 'BATTLE_START';
 export const BATTLE_ANIMATION_START = 'BATTLE_ANIMATION_START';
 export const BATTLE_ANIMATION_END = 'BATTLE_ANIMATION_END';
@@ -20,21 +20,19 @@ export const changeMenuBase = (menuContent) => ({
   payload: menuContent,
 });
 
-export const battleInit = () => ({
-  type: BATTLE_INIT,
+export const battleMove = (currentMove) => ({
+  type: BATTLE_MOVE,
+  payload: currentMove,
 });
 
 export const battleStart = () => ({
   type: BATTLE_START,
 });
 
-export const battleAnimationStart = (opponentHP) => {
-  console.log(opponentHP);
-  return ({
-    type: BATTLE_ANIMATION_START,
-    payload: opponentHP,
-  });
-};
+export const battleAnimationStart = (opponentHP) => ({
+  type: BATTLE_ANIMATION_START,
+  payload: opponentHP,
+});
 
 export const battleAnimationEnd = () => ({
   type: BATTLE_ANIMATION_END,

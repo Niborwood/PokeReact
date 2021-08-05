@@ -7,8 +7,8 @@ import actionHandler from '../selectors/actionHandler';
 
 const mapDispatchToProps = (dispatch) => ({
   changeMenuContent: (key, targetedMenuItem) => {
-    actionHandler('any', key, dispatch, changeMenuBase, { menuContent: targetedMenuItem });
     dispatch(battleEnd());
+    actionHandler('any', key, dispatch, changeMenuBase, { menuContent: targetedMenuItem });
   },
 });
 

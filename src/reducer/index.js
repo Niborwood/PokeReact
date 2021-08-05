@@ -6,6 +6,7 @@ import {
   BATTLE_ANIMATION_START,
   BATTLE_ANIMATION_END,
   BATTLE_END,
+  BATTLE_MOVE,
 } from '../actions';
 import pokemons from '../data/pokemons';
 import moves from '../data/moves';
@@ -14,10 +15,11 @@ import moves from '../data/moves';
 const initialState = {
   // --- UI
   menuContent: 0, // 0:MENU, 1:FIGHT, 2:ITEMS, 3:PKMN, 4:RUN
-  selectedMenuBaseItem: 1, // 1:FIGHT, 2:PKMN, 3:ITEM, 4:RUN
+  selectedMenuItem: 1, // 1:FIGHT, 2:PKMN, 3:ITEM, 4:RUN
   // --- BATTLE
   isBattling: false,
   battleAnimation: false,
+  currentMove: {},
   // --- DATA
   pokemons,
   moves,
@@ -64,21 +66,31 @@ const reducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         menuContent: payload.menuContent,
-        selectedMenuBaseItem: 1,
+        selectedMenuItem: 1,
       };
 
     case SELECT_MENUBASE_ITEM:
       return {
         ...state,
-        selectedMenuBaseItem: payload,
+        selectedMenuItem: payload,
       };
 
+    case BATTLE_MOVE:
+      return {
+        ...state,
+        currentMove: payload.currentMove,
+      };
+
+    // Launching battle mode
+    // (triggering text info and shake/flicker animation)
     case BATTLE_START:
       return {
         ...state,
         isBattling: true,
       };
 
+    // Store remaining opponent HP, and by effect,
+    // starting the battle animation
     case BATTLE_ANIMATION_START:
       return {
         ...state,
@@ -89,16 +101,20 @@ const reducer = (state = initialState, { type, payload }) => {
         },
       };
 
+    // All animations stop (flicker/shake + lifebar drain)
     case BATTLE_ANIMATION_END:
       return {
         ...state,
         battleAnimation: false,
       };
 
+      // One turn of battle has ended (return to attack menu)
+      // currentMove state is reset
     case BATTLE_END:
       return {
         ...state,
         isBattling: false,
+        currentMove: {},
       };
 
     default:

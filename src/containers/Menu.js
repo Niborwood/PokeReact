@@ -4,12 +4,15 @@ import { connect } from 'react-redux';
 import Menu from '../Menu';
 
 const mapStateToProps = ({
-  isBattling, menuContent, selectedMenuBaseItem, playerPkmn: { moves },
+  isBattling, menuContent, selectedMenuItem, playerPkmn: { moves },
+  currentMove: { name }, playerPkmn: { name: pkmnName },
 }) => ({
   isBattling,
   menuContent,
-  selectedMenuBaseItem,
+  selectedMenuItem,
   pkmnMoves: moves,
+  currentMove: name,
+  pkmnName,
 });
 
 export default connect(mapStateToProps, {})(Menu);
