@@ -2,6 +2,8 @@ import {
   BATTLE_MOVE, battleStart, battleAnimationStart, battleAnimationEnd,
 } from '../actions';
 
+import damageCalculator from '../selectors/damageCalculator';
+
 const battle = (store) => (next) => (action) => {
   switch (action.type) {
     case BATTLE_MOVE: {
@@ -9,20 +11,13 @@ const battle = (store) => (next) => (action) => {
       store.dispatch(battleStart());
 
       // Dispatch battle animation after a 1 second delay (shake/flicker)
-      // Operations to calculate damage and apply it to the enemy. Must recieve final HP info.
+      // Operations to calculate damage and apply it to the enemy. Must recieve final HP info
+      // (operation in the setTimeout to let BATTLE_MOVE action to be processed)
       // Start the battle animation (w/ reducer)
-
       setTimeout(() => {
-        let leftHP;
-        const currentDamage = store.getState().currentMove.damage;
+        const moveDamage = store.getState().currentMove.damage;
         const enemyHP = store.getState().opponentPkmn.currentHP;
-        console.log(currentDamage, enemyHP);
-        leftHP = enemyHP - currentDamage;
-        if (leftHP < 0) {
-          leftHP = 0;
-        }
-        console.log(leftHP);
-        store.dispatch(battleAnimationStart(leftHP));
+        store.dispatch(battleAnimationStart(damageCalculator(moveDamage, enemyHP)));
       }, 1000);
 
       // Dispatch battle end after a 2 second delay
