@@ -3,14 +3,21 @@ import PropTypes from 'prop-types';
 
 import NextArrow from './NextArrow';
 
-function TwoLinesMenu({ changeMenuContent, content, previousMenuContent }) {
+function TwoLinesMenu({
+  changeMenuContent, content, previousMenuContent, isBattling,
+}) {
   useEffect(() => {
     // Event listener to go back to previous menu via
-    // menuContent state.
+    // menuContent state. If user is battling, delay the listener by 1 second
+    // to give the battle time to finish.
+    const isBattlingDelay = isBattling ? 2000 : 0;
     const changeMenuContentEvent = ({ key }) => {
       changeMenuContent(key, previousMenuContent);
     };
-    document.addEventListener('keyup', changeMenuContentEvent);
+
+    setTimeout(() => {
+      document.addEventListener('keyup', changeMenuContentEvent);
+    }, isBattlingDelay);
 
     // UNMOUNT EVENTS
     return () => {
@@ -27,13 +34,17 @@ function TwoLinesMenu({ changeMenuContent, content, previousMenuContent }) {
 }
 
 TwoLinesMenu.propTypes = {
-  changeMenuContent: PropTypes.func.isRequired,
+  // FROM PROPS
   content: PropTypes.string.isRequired,
   previousMenuContent: PropTypes.number,
+  isBattling: PropTypes.bool,
+  // FROM CONTAINER
+  changeMenuContent: PropTypes.func.isRequired,
 };
 
 TwoLinesMenu.defaultProps = {
   previousMenuContent: 0,
+  isBattling: false,
 };
 
 export default TwoLinesMenu;

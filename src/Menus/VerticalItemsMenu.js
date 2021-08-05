@@ -10,6 +10,7 @@ function VerticalItemsMenu({
   selectedMenuItem,
   cancelAction,
   selectMenuItem,
+  battleInit,
 }) {
   // Render everytime selectedMenuitem changes
   useEffect(() => {
@@ -31,10 +32,17 @@ function VerticalItemsMenu({
     };
     document.addEventListener('keyup', cancelEventHandler);
 
+    // Let's battle the opponent pokemon !
+    const battleInitHandler = ({ key }) => {
+      battleInit(key);
+    };
+    document.addEventListener('keyup', battleInitHandler);
+
     // Remove event listeners when component unmounts
     return () => {
       document.removeEventListener('keyup', cancelEventHandler);
       document.removeEventListener('keyup', selectEventHandler);
+      document.removeEventListener('keyup', battleInitHandler);
     };
   }, [selectedMenuItem]);
 
@@ -71,6 +79,7 @@ VerticalItemsMenu.propTypes = {
   moves: PropTypes.arrayOf(PropTypes.object).isRequired,
   cancelAction: PropTypes.func.isRequired,
   selectMenuItem: PropTypes.func.isRequired,
+  battleInit: PropTypes.func.isRequired,
 };
 
 export default VerticalItemsMenu;

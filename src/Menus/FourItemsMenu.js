@@ -5,17 +5,17 @@ function FourItemsMenu({
   items, selectedMenuItem, selectMenu, changeMenu,
 }) {
   useEffect(() => {
-    // SELECT MENU BASE
-    const selectMenuEvent = ({ key }) => {
-      selectMenu(key, selectedMenuItem);
-    };
-    document.addEventListener('keyup', selectMenuEvent);
-
-    // CHANGE MENU BASE
+    // CHANGE MENU CONTENT
     const changeMenuEvent = ({ key }) => {
       changeMenu(key, selectedMenuItem);
     };
     document.addEventListener('keyup', changeMenuEvent);
+
+    // SELECT MENU ITEM
+    const selectMenuEvent = ({ key }) => {
+      selectMenu(key, selectedMenuItem);
+    };
+    document.addEventListener('keyup', selectMenuEvent);
 
     // UNMOUNT EVENTS
     return () => {

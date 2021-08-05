@@ -1,5 +1,12 @@
 // Create a reducer
-import { CHANGE_MENUCONTENT, SELECT_MENUBASE_ITEM } from '../actions';
+import {
+  CHANGE_MENUCONTENT,
+  SELECT_MENUBASE_ITEM,
+  BATTLE_START,
+  BATTLE_ANIMATION_START,
+  BATTLE_ANIMATION_END,
+  BATTLE_END,
+} from '../actions';
 import pokemons from '../data/pokemons';
 import moves from '../data/moves';
 
@@ -8,15 +15,18 @@ const initialState = {
   // --- UI
   menuContent: 0, // 0:MENU, 1:FIGHT, 2:ITEMS, 3:PKMN, 4:RUN
   selectedMenuBaseItem: 1, // 1:FIGHT, 2:PKMN, 3:ITEM, 4:RUN
+  // --- BATTLE
+  isBattling: false,
+  battleAnimation: false,
   // --- DATA
   pokemons,
   moves,
-  // --- GAME
+  // --- PKMNS
   opponentPkmn: {
     id: 28,
     name: 'Sablaireau',
     maxHP: 220,
-    currentHP: 22,
+    currentHP: 220,
     level: 50,
     stats: {
       atk: 120,
@@ -50,17 +60,45 @@ const initialState = {
 
 const reducer = (state = initialState, { type, payload }) => {
   switch (type) {
+    case CHANGE_MENUCONTENT:
+      return {
+        ...state,
+        menuContent: payload.menuContent,
+        selectedMenuBaseItem: 1,
+      };
+
     case SELECT_MENUBASE_ITEM:
       return {
         ...state,
         selectedMenuBaseItem: payload,
       };
 
-    case CHANGE_MENUCONTENT:
+    case BATTLE_START:
       return {
         ...state,
-        menuContent: payload.menuContent,
-        selectedMenuBaseItem: 1,
+        isBattling: true,
+      };
+
+    case BATTLE_ANIMATION_START:
+      return {
+        ...state,
+        battleAnimation: true,
+        opponentPkmn: {
+          ...state.opponentPkmn,
+          currentHP: payload,
+        },
+      };
+
+    case BATTLE_ANIMATION_END:
+      return {
+        ...state,
+        battleAnimation: false,
+      };
+
+    case BATTLE_END:
+      return {
+        ...state,
+        isBattling: false,
       };
 
     default:

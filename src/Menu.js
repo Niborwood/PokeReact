@@ -9,7 +9,17 @@ import FourItemsMenu from './containers/FourItemsMenu';
 import TwoLinesMenu from './containers/TwoLinesMenu';
 import VerticalItemsMenu from './containers/VerticalItemsMenu';
 
-function Menu({ menuContent, selectedMenuBaseItem, pkmnMoves }) {
+function Menu({
+  menuContent, selectedMenuBaseItem, pkmnMoves, isBattling,
+}) {
+  // If the user is battling, we want to show the attack dialog.
+  // We're also passing "1" as previousMenuContent to fallback to the
+  // "Attack" menu.
+  if (isBattling) {
+    return <TwoLinesMenu content="DRACAUFEU lance TRANCHE !" isBattling previousMenuContent={1} />;
+  }
+
+  // Else, we show the current menu (defaulting to 0, main menu)
   switch (menuContent) {
     case 1:
       return <VerticalItemsMenu selectedMenuItem={selectedMenuBaseItem} items={pkmnMoves} />;
@@ -33,6 +43,7 @@ Menu.propTypes = {
   menuContent: PropTypes.number.isRequired,
   selectedMenuBaseItem: PropTypes.number.isRequired,
   pkmnMoves: PropTypes.arrayOf(PropTypes.number).isRequired,
+  isBattling: PropTypes.bool.isRequired,
 };
 
 export default Menu;
