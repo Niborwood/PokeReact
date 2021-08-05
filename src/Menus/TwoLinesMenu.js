@@ -8,8 +8,9 @@ function TwoLinesMenu({
 }) {
   useEffect(() => {
     // Event listener to go back to previous menu via
-    // menuContent state. If user is battling, delay the listener by 1 second
-    // to give the battle time to finish.
+    // menuContent state.
+    // > If user is battling, delay the listener by 2 seconds
+    // (animation trigger delay + animation execution time) to give the battle time to finish.
     const isBattlingDelay = isBattling ? 2000 : 0;
     const changeMenuContentEvent = ({ key }) => {
       changeMenuContent(key, previousMenuContent);

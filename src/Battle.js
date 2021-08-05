@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import './Battle.scss';
-import Pokemon from './Pokemon';
+import Pokemon from './containers/Pokemon';
 
 function Battle({ opponentPkmn, playerPkmn }) {
   return (

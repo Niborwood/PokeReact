@@ -1,3 +1,10 @@
+// Flicker 3 times over a period of 1 second
+@keyframes blinker {
+    50% {
+        opacity: 0;
+    }
+}
+
 .pokemon {
     display: flex;
     flex-grow: 1;
@@ -77,8 +84,12 @@
     &__sprite {
         display: block;
         width: 70%;
-        position:relative;
-        top:8px;
+        position: relative;
+        top: 8px;
+    }
+
+    &__spriteHit {
+        animation: blinker .1128s step-start 7;
     }
 
     &__player {

@@ -2,7 +2,7 @@ import React from 'react';
 import './Pokemon.scss';
 import PropTypes from 'prop-types';
 
-function Pokemon({ pkmn, type }) {
+function Pokemon({ pkmn, type, isBattling }) {
   const percentLifebar = (pkmn.currentHP / pkmn.maxHP) * 100;
   let lifebarColor;
 
@@ -36,7 +36,7 @@ function Pokemon({ pkmn, type }) {
         </div>
       </div>
       <div className="pokemon__spriteHolder">
-        <img className="pokemon__sprite" src={`${process.env.PUBLIC_URL}/img/${type === 'opponent' ? 'front' : 'back'}/${pkmn.id}.png`} alt={pkmn.name} />
+        <img className={`pokemon__sprite ${isBattling && type === 'opponent' ? 'pokemon__spriteHit' : ''}`} src={`${process.env.PUBLIC_URL}/img/${type === 'opponent' ? 'front' : 'back'}/${pkmn.id}.png`} alt={pkmn.name} />
       </div>
     </div>
   );
@@ -51,6 +51,11 @@ Pokemon.propTypes = {
     level: PropTypes.number.isRequired,
   }).isRequired,
   type: PropTypes.string.isRequired,
+  isBattling: PropTypes.bool,
+};
+
+Pokemon.defaultProps = {
+  isBattling: false,
 };
 
 export default Pokemon;
