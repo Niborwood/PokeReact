@@ -19,7 +19,8 @@ const initialState = {
   // --- BATTLE
   isBattling: false,
   battleAnimation: false,
-  currentMove: {},
+  currentPlayerMove: {},
+  currentOpponentMove: {},
   // --- DATA
   pokemons,
   moves,
@@ -27,16 +28,16 @@ const initialState = {
   opponentPkmn: {
     id: 28,
     name: 'Sablaireau',
-    maxHP: 220,
-    currentHP: 220,
+    maxHP: 150,
+    currentHP: 150,
     level: 50,
     stats: {
       atk: 120,
       def: 120,
-      spd: 120,
+      spd: 90,
       spe: 120,
     },
-    moves: [1, 2, 3, 4],
+    moves: [1, 2, 5, 4],
     currentPPs: [],
     status: null,
     effect: null,
@@ -78,7 +79,8 @@ const reducer = (state = initialState, { type, payload }) => {
     case BATTLE_MOVE:
       return {
         ...state,
-        currentMove: payload.currentMove,
+        currentPlayerMove: payload.currentPlayerMove,
+        currentOpponentMove: payload.currentOpponentMove,
       };
 
     // Launching battle mode
@@ -109,12 +111,13 @@ const reducer = (state = initialState, { type, payload }) => {
       };
 
       // One turn of battle has ended (return to attack menu)
-      // currentMove state is reset
+      // currentPlayerMove state is reset
     case BATTLE_END:
       return {
         ...state,
         isBattling: false,
-        currentMove: {},
+        currentPlayerMove: {},
+        currentOpponentMove: {},
       };
 
     default:

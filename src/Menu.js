@@ -11,13 +11,13 @@ import VerticalItemsMenu from './containers/VerticalItemsMenu';
 
 function Menu({
   menuContent, selectedMenuItem, pkmnMoves, isBattling,
-  pkmnName, currentMove,
+  pkmnName, currentPlayerMove,
 }) {
   // If the user is battling, we want to show the attack dialog.
   // We're also passing "1" as previousMenuContent to fallback to the
   // "Attack" menu.
   if (isBattling) {
-    return <TwoLinesMenu content={`${pkmnName} lance ${currentMove} !`} isBattling previousMenuContent={1} />;
+    return <TwoLinesMenu content={`${pkmnName} lance ${currentPlayerMove} !`} isBattling previousMenuContent={1} />;
   }
 
   // Else, we show the current menu (defaulting to 0, main menu)
@@ -46,11 +46,11 @@ Menu.propTypes = {
   pkmnMoves: PropTypes.arrayOf(PropTypes.number).isRequired,
   isBattling: PropTypes.bool.isRequired,
   pkmnName: PropTypes.string,
-  currentMove: PropTypes.string,
+  currentPlayerMove: PropTypes.string,
 };
 
 Menu.defaultProps = {
-  currentMove: '',
+  currentPlayerMove: '',
   pkmnName: '',
 };
 

@@ -6,8 +6,9 @@ import verticalMenuKeyHandler from '../selectors/verticalMenuKeyHandler';
 
 import VerticalItemsMenu from '../Menus/VerticalItemsMenu';
 
-const mapStateToProps = ({ moves }) => ({
+const mapStateToProps = ({ moves, opponentPkmn: { moves: opponentMoves } }) => ({
   moves,
+  opponentMoves,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -17,8 +18,8 @@ const mapDispatchToProps = (dispatch) => ({
   cancelAction: (key, menuContent) => {
     actionHandler('cancel', key, dispatch, changeMenuBase, { menuContent });
   },
-  battleMove: (key, currentMove) => {
-    actionHandler('confirm', key, dispatch, battleMove, { currentMove });
+  battleMove: (key, currentPlayerMove, currentOpponentMove) => {
+    actionHandler('confirm', key, dispatch, battleMove, { currentPlayerMove, currentOpponentMove });
   },
 });
 

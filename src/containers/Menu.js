@@ -5,13 +5,13 @@ import Menu from '../Menu';
 
 const mapStateToProps = ({
   isBattling, menuContent, selectedMenuItem, playerPkmn: { moves },
-  currentMove: { name }, playerPkmn: { name: pkmnName },
+  currentPlayerMove: { name }, playerPkmn: { name: pkmnName },
 }) => ({
   isBattling,
   menuContent,
   selectedMenuItem,
   pkmnMoves: moves,
-  currentMove: name,
+  currentPlayerMove: name,
   pkmnName,
 });
 

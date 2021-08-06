@@ -20,13 +20,13 @@ export const changeMenuBase = (menuContent) => ({
   payload: menuContent,
 });
 
-export const battleMove = (currentMove) => ({
-  type: BATTLE_MOVE,
-  payload: currentMove,
-});
-
 export const battleStart = () => ({
   type: BATTLE_START,
+});
+
+export const battleMove = (currentPlayerMove) => ({
+  type: BATTLE_MOVE,
+  payload: currentPlayerMove,
 });
 
 export const battleAnimationStart = (opponentHP) => ({
