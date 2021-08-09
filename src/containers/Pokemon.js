@@ -3,8 +3,10 @@ import { connect } from 'react-redux';
 
 import Pokemon from '../Pokemon';
 
-const mapStateToProps = ({ isBattling }) => ({
+const mapStateToProps = ({ isBattling, playerTurn, opponentTurn }) => ({
   isBattling,
+  playerTurn,
+  opponentTurn,
 });
 
 export default connect(mapStateToProps, {})(Pokemon);

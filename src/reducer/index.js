@@ -2,11 +2,14 @@
 import {
   CHANGE_MENUCONTENT,
   SELECT_MENUBASE_ITEM,
+  BATTLE_INIT,
+  PLAYER_MOVE,
+  OPPONENT_MOVE,
   BATTLE_START,
   BATTLE_ANIMATION_START,
+  OPPONENT_DAMAGE_START,
   BATTLE_ANIMATION_END,
-  BATTLE_END,
-  BATTLE_MOVE,
+  PLAYER_MOVE_END,
 } from '../actions';
 import pokemons from '../data/pokemons';
 import moves from '../data/moves';
@@ -19,6 +22,8 @@ const initialState = {
   // --- BATTLE
   isBattling: false,
   battleAnimation: false,
+  playerTurn: false,
+  opponentTurn: false,
   currentPlayerMove: {},
   currentOpponentMove: {},
   // --- DATA
@@ -30,11 +35,12 @@ const initialState = {
     name: 'Sablaireau',
     maxHP: 150,
     currentHP: 150,
+    prevHP: 150,
     level: 50,
     stats: {
       atk: 120,
       def: 120,
-      spd: 90,
+      spd: 80,
       spe: 120,
     },
     moves: [1, 2, 5, 4],
@@ -46,7 +52,8 @@ const initialState = {
     id: 6,
     name: 'Dracaufeu',
     maxHP: 221,
-    currentHP: 134,
+    currentHP: 221,
+    prevHP: 221,
     level: 50,
     stats: {
       atk: 90,
@@ -63,6 +70,7 @@ const initialState = {
 
 const reducer = (state = initialState, { type, payload }) => {
   switch (type) {
+    // ---- UI MENU ----
     case CHANGE_MENUCONTENT:
       return {
         ...state,
@@ -76,7 +84,8 @@ const reducer = (state = initialState, { type, payload }) => {
         selectedMenuItem: payload,
       };
 
-    case BATTLE_MOVE:
+    // ---- BATTLE ----
+    case BATTLE_START:
       return {
         ...state,
         currentPlayerMove: payload.currentPlayerMove,
@@ -85,10 +94,21 @@ const reducer = (state = initialState, { type, payload }) => {
 
     // Launching battle mode
     // (triggering text info and shake/flicker animation)
-    case BATTLE_START:
+    case BATTLE_INIT:
       return {
         ...state,
         isBattling: true,
+      };
+
+    case PLAYER_MOVE:
+      return {
+        ...state,
+        playerTurn: true,
+      };
+    case OPPONENT_MOVE:
+      return {
+        ...state,
+        opponentTurn: true,
       };
 
     // Store remaining opponent HP, and by effect,
@@ -99,6 +119,17 @@ const reducer = (state = initialState, { type, payload }) => {
         battleAnimation: true,
         opponentPkmn: {
           ...state.opponentPkmn,
+          prevHP: state.opponentPkmn.currentHP,
+          currentHP: payload,
+        },
+      };
+
+    case OPPONENT_DAMAGE_START:
+      return {
+        ...state,
+        playerPkmn: {
+          ...state.playerPkmn,
+          prevHP: state.playerPkmn.currentHP,
           currentHP: payload,
         },
       };
@@ -112,10 +143,12 @@ const reducer = (state = initialState, { type, payload }) => {
 
       // One turn of battle has ended (return to attack menu)
       // currentPlayerMove state is reset
-    case BATTLE_END:
+    case PLAYER_MOVE_END:
       return {
         ...state,
         isBattling: false,
+        playerTurn: !state.playerTurn,
+        opponentTurn: !state.opponentTurn,
         currentPlayerMove: {},
         currentOpponentMove: {},
       };

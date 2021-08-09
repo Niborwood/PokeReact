@@ -88,7 +88,7 @@
         top: 8px;
     }
 
-    &__spriteHit {
+    &__spriteHit, &__playerHit {
         animation: blinker .1128s step-start 7;
     }
 

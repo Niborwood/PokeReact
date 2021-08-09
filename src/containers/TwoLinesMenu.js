@@ -1,13 +1,15 @@
 // Create a Redux container for the Pokemon component.
 import { connect } from 'react-redux';
-import { changeMenuBase, battleEnd } from '../actions';
+import { changeMenuBase, playerMoveEnd } from '../actions';
 
 import TwoLinesMenu from '../Menus/TwoLinesMenu';
 import actionHandler from '../selectors/actionHandler';
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch, { isBattling }) => ({
   changeMenuContent: (key, targetedMenuItem) => {
-    dispatch(battleEnd());
+    if (isBattling) {
+      dispatch(playerMoveEnd());
+    }
     actionHandler('any', key, dispatch, changeMenuBase, { menuContent: targetedMenuItem });
   },
 });

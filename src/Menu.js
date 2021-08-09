@@ -10,14 +10,16 @@ import TwoLinesMenu from './containers/TwoLinesMenu';
 import VerticalItemsMenu from './containers/VerticalItemsMenu';
 
 function Menu({
-  menuContent, selectedMenuItem, pkmnMoves, isBattling,
-  pkmnName, currentPlayerMove,
+  menuContent, selectedMenuItem, playerTurn, isBattling,
+  pkmnName, currentPlayerMove, pkmnMoves,
+  opponentPkmnName, opponentPlayerMove,
 }) {
   // If the user is battling, we want to show the attack dialog.
   // We're also passing "1" as previousMenuContent to fallback to the
-  // "Attack" menu.
+  // "Attack" menu. On each dialog, we check if it's the player's turn
+  // to determine whether to show the player's move or the opponent's.
   if (isBattling) {
-    return <TwoLinesMenu content={`${pkmnName} lance ${currentPlayerMove} !`} isBattling previousMenuContent={1} />;
+    return <TwoLinesMenu content={`${playerTurn ? pkmnName : opponentPkmnName} lance ${playerTurn ? currentPlayerMove : opponentPlayerMove} !`} isBattling previousMenuContent={1} />;
   }
 
   // Else, we show the current menu (defaulting to 0, main menu)
@@ -45,13 +47,16 @@ Menu.propTypes = {
   selectedMenuItem: PropTypes.number.isRequired,
   pkmnMoves: PropTypes.arrayOf(PropTypes.number).isRequired,
   isBattling: PropTypes.bool.isRequired,
-  pkmnName: PropTypes.string,
+  playerTurn: PropTypes.bool.isRequired,
+  pkmnName: PropTypes.string.isRequired,
   currentPlayerMove: PropTypes.string,
+  opponentPkmnName: PropTypes.string.isRequired,
+  currentOpponentMove: PropTypes.string,
 };
 
 Menu.defaultProps = {
   currentPlayerMove: '',
-  pkmnName: '',
+  currentOpponentMove: '',
 };
 
 export default Menu;
