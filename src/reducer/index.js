@@ -5,11 +5,10 @@ import {
   BATTLE_INIT,
   PLAYER_MOVE,
   OPPONENT_MOVE,
+  BATTLE_MOVE,
   BATTLE_START,
-  PLAYER_DAMAGE_START,
-  OPPONENT_DAMAGE_START,
-  OPPONENT_DAMAGE_END,
-  PLAYER_DAMAGE_END,
+  DAMAGE_START,
+  DAMAGE_END,
   BATTLE_END,
 } from '../actions';
 import pokemons from '../data/pokemons';
@@ -102,6 +101,14 @@ const reducer = (state = initialState, { type, payload }) => {
         isBattling: true,
       };
 
+    case BATTLE_MOVE:
+      return {
+        ...state,
+        lastTurn: payload.lastTurn,
+        [payload.playerTurn ? 'playerTurn' : 'opponentTurn']: true,
+        [payload.playerTurn ? 'opponentTurn' : 'playerTurn']: false,
+      };
+
     case PLAYER_MOVE:
       return {
         ...state,
@@ -119,35 +126,20 @@ const reducer = (state = initialState, { type, payload }) => {
 
     // Store remaining opponent HP, and by effect,
     // starting the battle animation
-    case PLAYER_DAMAGE_START:
+    case DAMAGE_START:
       return {
         ...state,
         battleAnimation: true,
-        opponentPkmn: {
-          ...state.opponentPkmn,
-          prevHP: state.opponentPkmn.currentHP,
-          currentHP: payload,
-        },
-      };
-
-    case OPPONENT_DAMAGE_START:
-      return {
-        ...state,
-        playerPkmn: {
-          ...state.playerPkmn,
-          prevHP: state.playerPkmn.currentHP,
-          currentHP: payload,
+        [payload.target]: {
+          ...state[payload.target],
+          prevHP: state[payload.target].currentHP,
+          currentHP: payload.targetHP,
         },
       };
 
     // All animations stop (flicker/shake + lifebar drain) +
     // signal to launch BattleEnd the whole battle
-    case PLAYER_DAMAGE_END:
-      return {
-        ...state,
-        battleAnimation: false,
-      };
-    case OPPONENT_DAMAGE_END:
+    case DAMAGE_END:
       return {
         ...state,
         battleAnimation: false,

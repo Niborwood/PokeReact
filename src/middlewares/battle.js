@@ -1,8 +1,8 @@
 import {
   BATTLE_START, PLAYER_MOVE, OPPONENT_MOVE,
   battleInit,
-  playerMove, playerDamageStart, playerDamageEnd,
-  opponentMove, opponentDamageStart, opponentDamageEnd,
+  playerMove, opponentMove,
+  damageStart, damageEnd,
 } from '../actions';
 
 import damageCalculator from '../selectors/damageCalculator';
@@ -38,13 +38,17 @@ const battle = (store) => (next) => (action) => {
       setTimeout(() => {
         const moveDamage = store.getState().currentPlayerMove.damage;
         const enemyHP = store.getState().opponentPkmn.currentHP;
-        store.dispatch(playerDamageStart(damageCalculator(moveDamage, enemyHP)));
+        const targetHP = damageCalculator(moveDamage, enemyHP);
+        store.dispatch(damageStart({
+          target: 'opponentPkmn',
+          targetHP,
+        }));
       }, 1000);
 
       // Dispatch battle end after a 2 second delay
       // Setting battleAnimation to false to enable key control for the player
       setTimeout(() => {
-        store.dispatch(playerDamageEnd());
+        store.dispatch(damageEnd());
       }, 2000);
       next(action);
       break;
@@ -56,14 +60,18 @@ const battle = (store) => (next) => (action) => {
       // Start the battle animation (w/ reducer)
       setTimeout(() => {
         const moveDamage = store.getState().currentOpponentMove.damage;
-        const playerHP = store.getState().playerPkmn.currentHP;
-        store.dispatch(opponentDamageStart(damageCalculator(moveDamage, playerHP)));
+        const enemyHP = store.getState().playerPkmn.currentHP;
+        const targetHP = damageCalculator(moveDamage, enemyHP);
+        store.dispatch(damageStart({
+          target: 'playerPkmn',
+          targetHP,
+        }));
       }, 1000);
 
       // Dispatch battle end after a 2 second delay
       // Setting battleAnimation to false to enable key control for the player
       setTimeout(() => {
-        store.dispatch(opponentDamageEnd());
+        store.dispatch(damageEnd());
       }, 2000);
       next(action);
       break;

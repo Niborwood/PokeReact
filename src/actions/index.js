@@ -1,20 +1,18 @@
+// --- UI ACTIONS ---
 export const SELECT_MENUBASE_ITEM = 'SELECT_MENUBASE_ITEM';
 export const CHANGE_MENUCONTENT = 'CHANGE_MENUCONTENT';
 
-export const BATTLE_INIT = 'BATTLE_INIT';
+// --- BATTLE ACTIONS ---
+// Middlewares
+export const BATTLE_START = 'BATTLE_START';
 export const PLAYER_MOVE = 'PLAYER_MOVE';
 export const OPPONENT_MOVE = 'OPPONENT_MOVE';
+export const BATTLE_MOVE = 'BATTLE_MOVE';
 
-export const BATTLE_START = 'BATTLE_START';
-export const PLAYER_DAMAGE_START = 'PLAYER_DAMAGE_START';
-export const PLAYER_DAMAGE_END = 'PLAYER_DAMAGE_END';
-export const PLAYER_MOVE_END = 'PLAYER_MOVE_END';
-
-export const OPPONENT_START = 'OPPONENT_START';
-export const OPPONENT_DAMAGE_START = 'OPPONENT_DAMAGE_START';
-export const OPPONENT_DAMAGE_END = 'OPPONENT_DAMAGE_END';
-export const OPPONENT_MOVE_END = 'OPPONENT_MOVE_END';
-
+// Common
+export const BATTLE_INIT = 'BATTLE_INIT';
+export const DAMAGE_START = 'DAMAGE_START';
+export const DAMAGE_END = 'DAMAGE_END';
 export const BATTLE_END = 'BATTLE_END';
 
 // ---- UI MENU ----
@@ -40,51 +38,32 @@ export const battleInit = () => ({
   type: BATTLE_INIT,
 });
 
-// LAUNCH THE MIDDLEWARE CASE TO HANDLE MULTIPLE ACTIONS FOR THE PLAYER MOVE
+// Move middlewares
+export const battleMove = (battleData) => ({
+  type: BATTLE_MOVE,
+  payload: battleData,
+});
 export const playerMove = (isLastTurn) => ({
   type: PLAYER_MOVE,
   payload: isLastTurn,
 });
-
-// LAUNCH THE MIDDLEWARE CASE TO HANDLE MULTIPLE ACTIONS FOR THE OPPONENT MOVE
 export const opponentMove = (isLastTurn) => ({
   type: OPPONENT_MOVE,
   payload: isLastTurn,
 });
 
-// Specific player move actions (start, animation/damage start, end) against opponent pokemon
 export const battleStart = (currentPlayerMove) => ({
   type: BATTLE_START,
   payload: currentPlayerMove,
 });
-export const playerDamageStart = (opponentHP) => ({
-  type: PLAYER_DAMAGE_START,
-  payload: opponentHP,
-});
-export const playerDamageEnd = () => ({
-  type: PLAYER_DAMAGE_END,
-});
-export const playerMoveEnd = () => ({
-  type: PLAYER_MOVE_END,
-});
 
-// Specific opponent move actions (start, animation/damage start, end) against player pokemon
-export const OpponentStart = (currentOpponentMove) => ({
-  type: OPPONENT_START,
-  payload: currentOpponentMove,
+export const damageStart = (damageData) => ({
+  type: DAMAGE_START,
+  payload: damageData,
 });
-export const opponentDamageStart = (playerHP) => ({
-  type: OPPONENT_DAMAGE_START,
-  payload: playerHP,
+export const damageEnd = () => ({
+  type: DAMAGE_END,
 });
-export const opponentDamageEnd = () => ({
-  type: OPPONENT_DAMAGE_END,
-});
-export const opponentMoveEnd = () => ({
-  type: OPPONENT_MOVE_END,
-});
-
-// Common move actions (battle end)
 
 export const battleEnd = () => ({
   type: BATTLE_END,
