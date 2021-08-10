@@ -10,9 +10,6 @@ import {
   OPPONENT_DAMAGE_START,
   OPPONENT_DAMAGE_END,
   PLAYER_DAMAGE_END,
-  PLAYER_MOVE_END,
-  OPPONENT_MOVE_END,
-  LAST_TURN_END,
   BATTLE_END,
 } from '../actions';
 import pokemons from '../data/pokemons';
@@ -45,7 +42,7 @@ const initialState = {
     stats: {
       atk: 120,
       def: 120,
-      spd: 135,
+      spd: 10,
       spe: 120,
     },
     moves: [1, 2, 5, 4],
@@ -75,7 +72,7 @@ const initialState = {
 
 const reducer = (state = initialState, { type, payload }) => {
   switch (type) {
-    // ---- UI MENU ----
+    // ---- UI MENU -----------------------------------------
     case CHANGE_MENUCONTENT:
       return {
         ...state,
@@ -89,7 +86,7 @@ const reducer = (state = initialState, { type, payload }) => {
         selectedMenuItem: payload,
       };
 
-    // ---- BATTLE ----
+    // ---- BATTLE ------------------------------------------
     case BATTLE_START:
       return {
         ...state,
@@ -149,34 +146,15 @@ const reducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         battleAnimation: false,
-        // lastTurn: true,
-        // playerTurn: !state.lastTurn,
       };
-
     case OPPONENT_DAMAGE_END:
       return {
         ...state,
         battleAnimation: false,
       };
 
-    // End turn if it's the first turn of battle
-    case PLAYER_MOVE_END:
-      return {
-        ...state,
-      };
-    case OPPONENT_MOVE_END:
-      return {
-        ...state,
-      };
-
       // One turn of battle has ended (return to attack menu)
       // currentPlayerMove state is reset
-    case LAST_TURN_END:
-      return {
-        ...state,
-        lastTurn: false,
-      };
-
     case BATTLE_END:
       return {
         ...state,
@@ -185,6 +163,7 @@ const reducer = (state = initialState, { type, payload }) => {
         currentOpponentMove: {},
         lastTurn: false,
         playerTurn: false,
+        opponentTurn: false,
       };
 
     default:

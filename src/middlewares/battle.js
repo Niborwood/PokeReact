@@ -3,7 +3,6 @@ import {
   battleInit,
   playerMove, playerDamageStart, playerDamageEnd,
   opponentMove, opponentDamageStart, opponentDamageEnd,
-  // lastTurnEnd,
 } from '../actions';
 
 import damageCalculator from '../selectors/damageCalculator';
@@ -19,7 +18,6 @@ const battle = (store) => (next) => (action) => {
       const { spd: opponentSpeed } = store.getState().opponentPkmn.stats;
 
       const faster = playerSpeed >= opponentSpeed ? 'player' : 'opponent';
-      console.log(faster);
       if (faster === 'player') {
         store.dispatch(playerMove(false));
       } else {

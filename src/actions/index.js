@@ -15,7 +15,6 @@ export const OPPONENT_DAMAGE_START = 'OPPONENT_DAMAGE_START';
 export const OPPONENT_DAMAGE_END = 'OPPONENT_DAMAGE_END';
 export const OPPONENT_MOVE_END = 'OPPONENT_MOVE_END';
 
-export const LAST_TURN_END = 'LAST_TURN_END';
 export const BATTLE_END = 'BATTLE_END';
 
 // ---- UI MENU ----
@@ -85,10 +84,7 @@ export const opponentMoveEnd = () => ({
   type: OPPONENT_MOVE_END,
 });
 
-// Common move actions (last turn end, battle end)
-export const lastTurnEnd = () => ({
-  type: LAST_TURN_END,
-});
+// Common move actions (battle end)
 
 export const battleEnd = () => ({
   type: BATTLE_END,
