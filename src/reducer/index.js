@@ -3,8 +3,6 @@ import {
   CHANGE_MENUCONTENT,
   SELECT_MENUBASE_ITEM,
   BATTLE_INIT,
-  PLAYER_MOVE,
-  OPPONENT_MOVE,
   BATTLE_MOVE,
   BATTLE_START,
   DAMAGE_START,
@@ -107,21 +105,6 @@ const reducer = (state = initialState, { type, payload }) => {
         lastTurn: payload.lastTurn,
         [payload.playerTurn ? 'playerTurn' : 'opponentTurn']: true,
         [payload.playerTurn ? 'opponentTurn' : 'playerTurn']: false,
-      };
-
-    case PLAYER_MOVE:
-      return {
-        ...state,
-        playerTurn: true,
-        opponentTurn: false,
-        lastTurn: payload,
-      };
-    case OPPONENT_MOVE:
-      return {
-        ...state,
-        opponentTurn: true,
-        playerTurn: false,
-        lastTurn: payload,
       };
 
     // Store remaining opponent HP, and by effect,

@@ -5,8 +5,6 @@ export const CHANGE_MENUCONTENT = 'CHANGE_MENUCONTENT';
 // --- BATTLE ACTIONS ---
 // Middlewares
 export const BATTLE_START = 'BATTLE_START';
-export const PLAYER_MOVE = 'PLAYER_MOVE';
-export const OPPONENT_MOVE = 'OPPONENT_MOVE';
 export const BATTLE_MOVE = 'BATTLE_MOVE';
 
 // Common
@@ -42,14 +40,6 @@ export const battleInit = () => ({
 export const battleMove = (battleData) => ({
   type: BATTLE_MOVE,
   payload: battleData,
-});
-export const playerMove = (isLastTurn) => ({
-  type: PLAYER_MOVE,
-  payload: isLastTurn,
-});
-export const opponentMove = (isLastTurn) => ({
-  type: OPPONENT_MOVE,
-  payload: isLastTurn,
 });
 
 export const battleStart = (currentPlayerMove) => ({

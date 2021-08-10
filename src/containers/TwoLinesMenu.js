@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import store from '../store';
 
 import {
-  changeMenuBase, playerMove, opponentMove, battleEnd,
+  changeMenuBase, battleMove, battleEnd,
 } from '../actions';
 
 import TwoLinesMenu from '../Menus/TwoLinesMenu';
@@ -24,11 +24,15 @@ const mapDispatchToProps = (dispatch) => ({
       actionHandler('any', key, dispatch, changeMenuBase, { menuContent: targetedMenuItem });
       // If it's the opponent's turn, we need to perform his move as the last move.
     } else if (opponentTurn) {
-      dispatch(playerMove(true)); // true means we state that it's the last turn.
-      // If it's the player's turn, we need to perform his move as the last move.
+      dispatch(battleMove({
+        playerTurn: true,
+        lastTurn: true,
+      }));
     } else if (playerTurn) {
-      dispatch(opponentMove(true)); // true means we state that it's the last turn.
-      // When the last move is done (set with lastTurnEnd), we can exit the battle.
+      dispatch(battleMove({
+        playerTurn: false,
+        lastTurn: true,
+      }));
     }
   },
 });
