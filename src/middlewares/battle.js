@@ -1,8 +1,9 @@
 import {
   BATTLE_START, PLAYER_MOVE, OPPONENT_MOVE,
-  playerMove, battleInit, battleAnimationStart,
-  opponentMove, opponentDamageStart,
-  battleAnimationEnd,
+  battleInit,
+  playerMove, playerDamageStart, playerDamageEnd,
+  opponentMove, opponentDamageStart, opponentDamageEnd,
+  // lastTurnEnd,
 } from '../actions';
 
 import damageCalculator from '../selectors/damageCalculator';
@@ -20,9 +21,9 @@ const battle = (store) => (next) => (action) => {
       const faster = playerSpeed >= opponentSpeed ? 'player' : 'opponent';
       console.log(faster);
       if (faster === 'player') {
-        store.dispatch(playerMove());
+        store.dispatch(playerMove(false));
       } else {
-        store.dispatch(opponentMove());
+        store.dispatch(opponentMove(false));
       }
 
       // Let the middleware continue to store
@@ -39,13 +40,13 @@ const battle = (store) => (next) => (action) => {
       setTimeout(() => {
         const moveDamage = store.getState().currentPlayerMove.damage;
         const enemyHP = store.getState().opponentPkmn.currentHP;
-        store.dispatch(battleAnimationStart(damageCalculator(moveDamage, enemyHP)));
+        store.dispatch(playerDamageStart(damageCalculator(moveDamage, enemyHP)));
       }, 1000);
 
       // Dispatch battle end after a 2 second delay
       // Setting battleAnimation to false to enable key control for the player
       setTimeout(() => {
-        store.dispatch(battleAnimationEnd());
+        store.dispatch(playerDamageEnd());
       }, 2000);
       next(action);
       break;
@@ -64,7 +65,7 @@ const battle = (store) => (next) => (action) => {
       // Dispatch battle end after a 2 second delay
       // Setting battleAnimation to false to enable key control for the player
       setTimeout(() => {
-        store.dispatch(battleAnimationEnd());
+        store.dispatch(opponentDamageEnd());
       }, 2000);
       next(action);
       break;

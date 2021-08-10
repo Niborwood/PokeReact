@@ -6,13 +6,17 @@ export const PLAYER_MOVE = 'PLAYER_MOVE';
 export const OPPONENT_MOVE = 'OPPONENT_MOVE';
 
 export const BATTLE_START = 'BATTLE_START';
-export const BATTLE_ANIMATION_START = 'BATTLE_ANIMATION_START';
+export const PLAYER_DAMAGE_START = 'PLAYER_DAMAGE_START';
+export const PLAYER_DAMAGE_END = 'PLAYER_DAMAGE_END';
 export const PLAYER_MOVE_END = 'PLAYER_MOVE_END';
+
 export const OPPONENT_START = 'OPPONENT_START';
 export const OPPONENT_DAMAGE_START = 'OPPONENT_DAMAGE_START';
 export const OPPONENT_DAMAGE_END = 'OPPONENT_DAMAGE_END';
+export const OPPONENT_MOVE_END = 'OPPONENT_MOVE_END';
 
-export const BATTLE_ANIMATION_END = 'BATTLE_ANIMATION_END';
+export const LAST_TURN_END = 'LAST_TURN_END';
+export const BATTLE_END = 'BATTLE_END';
 
 // ---- UI MENU ----
 
@@ -38,13 +42,15 @@ export const battleInit = () => ({
 });
 
 // LAUNCH THE MIDDLEWARE CASE TO HANDLE MULTIPLE ACTIONS FOR THE PLAYER MOVE
-export const playerMove = () => ({
+export const playerMove = (isLastTurn) => ({
   type: PLAYER_MOVE,
+  payload: isLastTurn,
 });
 
 // LAUNCH THE MIDDLEWARE CASE TO HANDLE MULTIPLE ACTIONS FOR THE OPPONENT MOVE
-export const opponentMove = () => ({
+export const opponentMove = (isLastTurn) => ({
   type: OPPONENT_MOVE,
+  payload: isLastTurn,
 });
 
 // Specific player move actions (start, animation/damage start, end) against opponent pokemon
@@ -52,9 +58,12 @@ export const battleStart = (currentPlayerMove) => ({
   type: BATTLE_START,
   payload: currentPlayerMove,
 });
-export const battleAnimationStart = (opponentHP) => ({
-  type: BATTLE_ANIMATION_START,
+export const playerDamageStart = (opponentHP) => ({
+  type: PLAYER_DAMAGE_START,
   payload: opponentHP,
+});
+export const playerDamageEnd = () => ({
+  type: PLAYER_DAMAGE_END,
 });
 export const playerMoveEnd = () => ({
   type: PLAYER_MOVE_END,
@@ -72,8 +81,15 @@ export const opponentDamageStart = (playerHP) => ({
 export const opponentDamageEnd = () => ({
   type: OPPONENT_DAMAGE_END,
 });
+export const opponentMoveEnd = () => ({
+  type: OPPONENT_MOVE_END,
+});
 
-// Common move actions (animation end, battle end)
-export const battleAnimationEnd = () => ({
-  type: BATTLE_ANIMATION_END,
+// Common move actions (last turn end, battle end)
+export const lastTurnEnd = () => ({
+  type: LAST_TURN_END,
+});
+
+export const battleEnd = () => ({
+  type: BATTLE_END,
 });

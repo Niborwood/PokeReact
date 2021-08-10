@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Menu from '../Menu';
 
 const mapStateToProps = ({
-  isBattling, menuContent, selectedMenuItem, playerTurn,
+  isBattling, menuContent, selectedMenuItem, playerTurn, opponentTurn,
   playerPkmn: { moves },
   currentPlayerMove: { name: currentPlayerMove }, playerPkmn: { name: pkmnName },
   currentOpponentMove: { name: opponentPlayerMove }, opponentPkmn: { name: opponentPkmnName },
@@ -14,6 +14,7 @@ const mapStateToProps = ({
   menuContent,
   selectedMenuItem,
   playerTurn,
+  opponentTurn,
   pkmnMoves: moves,
   currentPlayerMove,
   pkmnName,

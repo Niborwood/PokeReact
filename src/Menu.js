@@ -19,7 +19,7 @@ function Menu({
   // "Attack" menu. On each dialog, we check if it's the player's turn
   // to determine whether to show the player's move or the opponent's.
   if (isBattling) {
-    return <TwoLinesMenu content={`${playerTurn ? pkmnName : opponentPkmnName} lance ${playerTurn ? currentPlayerMove : opponentPlayerMove} !`} isBattling previousMenuContent={1} />;
+    return <TwoLinesMenu content={`${playerTurn ? pkmnName : opponentPkmnName} lance ${playerTurn ? currentPlayerMove : opponentPlayerMove} !`} isBattling playerTurn previousMenuContent={1} />;
   }
 
   // Else, we show the current menu (defaulting to 0, main menu)
@@ -47,6 +47,7 @@ Menu.propTypes = {
   selectedMenuItem: PropTypes.number.isRequired,
   pkmnMoves: PropTypes.arrayOf(PropTypes.number).isRequired,
   isBattling: PropTypes.bool.isRequired,
+  opponentTurn: PropTypes.bool.isRequired,
   playerTurn: PropTypes.bool.isRequired,
   pkmnName: PropTypes.string.isRequired,
   currentPlayerMove: PropTypes.string,

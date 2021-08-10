@@ -6,10 +6,14 @@ import {
   PLAYER_MOVE,
   OPPONENT_MOVE,
   BATTLE_START,
-  BATTLE_ANIMATION_START,
+  PLAYER_DAMAGE_START,
   OPPONENT_DAMAGE_START,
-  BATTLE_ANIMATION_END,
+  OPPONENT_DAMAGE_END,
+  PLAYER_DAMAGE_END,
   PLAYER_MOVE_END,
+  OPPONENT_MOVE_END,
+  LAST_TURN_END,
+  BATTLE_END,
 } from '../actions';
 import pokemons from '../data/pokemons';
 import moves from '../data/moves';
@@ -24,6 +28,7 @@ const initialState = {
   battleAnimation: false,
   playerTurn: false,
   opponentTurn: false,
+  lastTurn: false,
   currentPlayerMove: {},
   currentOpponentMove: {},
   // --- DATA
@@ -40,7 +45,7 @@ const initialState = {
     stats: {
       atk: 120,
       def: 120,
-      spd: 80,
+      spd: 135,
       spe: 120,
     },
     moves: [1, 2, 5, 4],
@@ -104,16 +109,20 @@ const reducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         playerTurn: true,
+        opponentTurn: false,
+        lastTurn: payload,
       };
     case OPPONENT_MOVE:
       return {
         ...state,
         opponentTurn: true,
+        playerTurn: false,
+        lastTurn: payload,
       };
 
     // Store remaining opponent HP, and by effect,
     // starting the battle animation
-    case BATTLE_ANIMATION_START:
+    case PLAYER_DAMAGE_START:
       return {
         ...state,
         battleAnimation: true,
@@ -134,23 +143,48 @@ const reducer = (state = initialState, { type, payload }) => {
         },
       };
 
-    // All animations stop (flicker/shake + lifebar drain)
-    case BATTLE_ANIMATION_END:
+    // All animations stop (flicker/shake + lifebar drain) +
+    // signal to launch BattleEnd the whole battle
+    case PLAYER_DAMAGE_END:
+      return {
+        ...state,
+        battleAnimation: false,
+        // lastTurn: true,
+        // playerTurn: !state.lastTurn,
+      };
+
+    case OPPONENT_DAMAGE_END:
       return {
         ...state,
         battleAnimation: false,
       };
 
-      // One turn of battle has ended (return to attack menu)
-      // currentPlayerMove state is reset
+    // End turn if it's the first turn of battle
     case PLAYER_MOVE_END:
       return {
         ...state,
+      };
+    case OPPONENT_MOVE_END:
+      return {
+        ...state,
+      };
+
+      // One turn of battle has ended (return to attack menu)
+      // currentPlayerMove state is reset
+    case LAST_TURN_END:
+      return {
+        ...state,
+        lastTurn: false,
+      };
+
+    case BATTLE_END:
+      return {
+        ...state,
         isBattling: false,
-        playerTurn: !state.playerTurn,
-        opponentTurn: !state.opponentTurn,
         currentPlayerMove: {},
         currentOpponentMove: {},
+        lastTurn: false,
+        playerTurn: false,
       };
 
     default:
