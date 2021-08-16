@@ -1,4 +1,5 @@
 // Create a Redux container for the Pokemon component.
+// Test
 import { connect } from 'react-redux';
 
 import Menu from '../Menu';
