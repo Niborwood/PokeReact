@@ -28,6 +28,13 @@ function App({ isBattling }) {
         <p>
           C&apos;est tout, mais pour apprendre Redux, c&apos;est déjà pas mal !
         </p>
+        <p>
+          Fleches / ZQSD pour déplacer le curseur
+          <br />
+          Entrée / X pour valider
+          <br />
+          Echap / C pour annuler
+        </p>
       </div>
     </div>
   );
